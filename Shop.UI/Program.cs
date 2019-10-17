@@ -12,6 +12,7 @@
 using Microsoft.Extensions.Configuration;
 using Shop.DataAccess;
 using Shop.Domain;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 
@@ -33,22 +34,34 @@ namespace Shop.UI
                                  .Value;
 
             string connectionString = configurationRoot.GetConnectionString("DebugConnectionString");
-
-            Category category = new Category
+            var categories = new List<Category>() {
+             new Category
             {
                 Name = "Бытовая техника",
                 ImagePath = "C:/data"
-            };
-
+            }
+        }
+            var items = new List<Item>() {
+            new Item
+            {
+                 Name = "Стиральная машина",
+                ImagePath = "C:/data",
+                Price = 100000,
+                Description = "cool",
+                CategoryId = category.Id
+            }
+            }
             using (var context = new ShopContext(connectionString))
             {
                 context.Categories.Add(category);
-                var result = context.Categories.ToList();
+                var result1 = context.Categories.ToList();   //получает все результаты из бд
                 context.Categories.Remove(category);
-
-                //context.Remove(category);
+                //context.Remove(category);    
+                context.Items.Add(item);
+                var result2 = context.Items.ToList();
+              //  context.Items.Remove(item);
                 context.SaveChanges();  //автомотически сохраняет все изменения
+            }
             }
         }
     }
-}

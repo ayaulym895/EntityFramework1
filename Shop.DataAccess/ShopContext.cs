@@ -17,12 +17,13 @@ namespace Shop.DataAccess
         }        
 
         public DbSet<Category> Categories { get; set; }
+        public DbSet<Item> Items { get; set; }
         //и точно такие же другие сущности
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer(connectionString);
-            optionsBuilder.UseInMemoryDatabase("Shooop");
+            optionsBuilder.UseSqlServer(connectionString);
+            //optionsBuilder.UseInMemoryDatabase("Shooop");
         }        
     }
 }
